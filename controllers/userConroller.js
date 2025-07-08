@@ -38,6 +38,13 @@ const loginUser = async (req, res) => {
         .status(400)
         .json({ success: false, message: "Invalid email or password" });
 
+    // check if password is correct
+    const isPasswordCorrect = await bcrypt.compare(password, user.password);
+    if (!isPasswordCorrect)
+      return res
+        .status(400)
+        .json({ success: false, message: "Invalid email or password" });
+
     const token = generateToken(user);
     res.status(200).json({
       success: false,
