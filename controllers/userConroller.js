@@ -1,4 +1,3 @@
-import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import User from "../models/Users.js";
 import generateToken from "../utilities/generateToken.js";
@@ -45,7 +44,11 @@ const loginUser = async (req, res) => {
       message: "User successfully logged in",
       token: token,
     });
-  } catch (error) {}
+  } catch (error) {
+    res
+      .status(400)
+      .json({ success: false, message: "Error occured while logging user" });
+  }
 };
 
 export { registerUser, loginUser };
