@@ -1,0 +1,23 @@
+[
+  {
+    "title": "10 Powerful Node.js Tips for Backend Developers",
+    "content": "Explore performance tips, tools, and real-world examples to boost your Node.js backend apps.",
+    "category": "Technology",
+    "tags": ["Node.js", "JavaScript", "APIs"],
+    "createdAt": "2024-06-01T10:20:00Z"
+  },
+  {
+    "title": "How to Travel the World on a Student Budget",
+    "content": "Here’s how I visited 10 countries while being in college, spending less than $1,000 per trip.",
+    "category": "Travel",
+    "tags": ["Budget Travel", "Self Help"],
+    "createdAt": "2024-05-20T15:10:00Z"
+  },
+  {
+    "title": "Mental Health Tips for Remote Developers",
+    "content": "Remote work offers freedom but also isolation. These 7 habits helped me maintain mental wellness.",
+    "category": "Health & Wellness",
+    "tags": ["Mental Health", "Productivity"],
+    "createdAt": "2024-07-01T08:30:00Z"
+  }
+]
