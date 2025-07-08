@@ -1,4 +1,5 @@
 import Tags from "../models/Tags.js";
+import slugify from "slugify";
 
 const getTags = async (req, res) => {
   try {
@@ -23,7 +24,8 @@ const getTags = async (req, res) => {
   }
 };
 const addTag = async (req, res) => {
-  const { name, simpleName } = req.body;
+  const { name } = req.body;
+  const simpleName = slugify(name, { lower: true, strict: true });
   try {
     const existingTag = await Tags.findOne({ simpleName: simpleName });
     if (existingTag) {
@@ -52,8 +54,8 @@ const addTag = async (req, res) => {
 };
 const updateTag = async (req, res) => {
   const { id } = req.params;
-  console.log(req.params, req.body);
-  const { name, simpleName } = req.body;
+  const { name } = req.body;
+  const simpleName = slugify(name, { lower: true, strict: true });
   try {
     const tag = await Tags.findByIdAndUpdate(
       { _id: id },
