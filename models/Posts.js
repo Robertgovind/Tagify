@@ -28,22 +28,28 @@ const postSchema = new mongoose.Schema(
       ref: "User",
       required: true,
     },
-    likes: {
-      type: Number,
-      default: 0,
-    },
-    dislikes: {
-      type: Number,
-      default: 0,
-    },
+    likes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    dislikes: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
     views: {
       type: Number,
       default: 0,
     },
-    shares: {
-      type: Number,
-      default: 0,
-    },
+    shares: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User",
+      },
+    ],
   },
   { timestamps: true }
 );

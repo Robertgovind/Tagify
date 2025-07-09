@@ -13,11 +13,7 @@ const createPost = async (req, res) => {
 
     // Create a new post
     const newPost = await Post.create({
-      title,
-      content,
-      category,
-      tags,
-      author,
+      ...req.body,
     });
 
     res.status(201).json({
@@ -154,9 +150,107 @@ const deletePost = async (req, res) => {
 const viewPost = async (req, res) => {
   // This function handle viewing a post by its ID
   // It increments the view count and return the post details
+  const { id } = req.params;
+  try {
+    const post = await Post.findOne({ _id: id })
+      .populate("category", "name")
+      .populate("tags", "name")
+      .populate("author", "username email");
+
+    if (!post) {
+      return res.status(404).json({
+        success: false,
+        message: "Post not found",
+      });
+    }
+    // Increment the view count
+    post.views += 1;
+    await post.save();
+    res.status(200).json({
+      success: true,
+      message: "Post viewed successfully",
+      post,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error viewing post",
+      error: error.message,
+    });
+  }
 };
-const likePost = async (req, res) => {};
-const dislikePost = async (req, res) => {};
+const likePost = async (req, res) => {
+  const { id } = req.params;
+  const { userId } = req.body;
+  try {
+    // Find the post by ID
+    const post = await Post.findById(id);
+    if (!post) {
+      return res.status(404).json({
+        success: false,
+        message: "Post not found",
+      });
+    }
+    // Check if the user has already liked the post
+    if (post.likes.includes(userId)) {
+      return res.status(400).json({
+        success: false,
+        message: "You have already liked this post",
+      });
+    }
+    // Add the user ID to the likes array
+    post.likes.push(userId);
+    // Save the updated post
+    await post.save();
+    res.status(200).json({
+      success: true,
+      message: "Post liked successfully",
+      post,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error liking post",
+      error: error.message,
+    });
+  }
+};
+const dislikePost = async (req, res) => {
+  const { id } = req.params;
+  const { userId } = req.body;
+  try {
+    // Find the post by ID
+    const post = await Post.findById(id);
+    if (!post) {
+      return res.status(404).json({
+        success: false,
+        message: "Post not found",
+      });
+    }
+    // Check if the user has already disliked the post
+    if (post.likes.includes(userId)) {
+      return res.status(400).json({
+        success: false,
+        message: "You have already disliked this post",
+      });
+    }
+    // Add the user ID to the dislikes array
+    post.dislikes.push(userId);
+    // Save the updated post
+    await post.save();
+    res.status(200).json({
+      success: true,
+      message: "Post liked successfully",
+      post,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error liking post",
+      error: error.message,
+    });
+  }
+};
 const getPostsByCategory = async (req, res) => {};
 const getPostsByTag = async (req, res) => {};
 const getPostsByUser = async (req, res) => {};
