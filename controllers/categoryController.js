@@ -1,3 +1,4 @@
+import slugify from "slugify";
 import Categories from "../models/Categories.js";
 const getAllCategories = async (req, res) => {
   try {
@@ -21,7 +22,8 @@ const getAllCategories = async (req, res) => {
 };
 const addCategory = async (req, res) => {
   try {
-    const { name, simpleName } = req.body;
+    const { name } = req.body;
+    const simpleName = slugify(name, { lower: true, strict: true });
     let category = await Categories.findOne({ simpleName });
     if (category)
       return res
