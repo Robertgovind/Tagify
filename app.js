@@ -1,10 +1,10 @@
 import express from "express";
-import dbConnection from "./config/db.js";
+import dbConnection from "./src/config/db.js";
 import "dotenv/config";
-import userRouter from "./routes/userRoute.js";
-import categoryRouter from "./routes/categoryRoutes.js";
-import tagsRouter from "./routes/tagsRoute.js";
-import postRouter from "./routes/postRoute.js";
+import userRouter from "./src/routes/userRoute.js";
+import categoryRouter from "./src/routes/categoryRoutes.js";
+import tagsRouter from "./src/routes/tagsRoute.js";
+import postRouter from "./src/routes/postRoute.js";
 
 const app = express();
 app.use(express.json());
