@@ -52,9 +52,11 @@ const loginUser = async (req, res) => {
       token: token,
     });
   } catch (error) {
-    res
-      .status(400)
-      .json({ success: false, message: "Error occured while logging user" });
+    res.status(400).json({
+      success: false,
+      message: "Error occured while logging user",
+      error: error.message,
+    });
   }
 };
 

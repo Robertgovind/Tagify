@@ -4,15 +4,15 @@ const commentsSchema = new mongoose.Schema(
   {
     postId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Posts",
+      ref: "Post",
       required: true,
     },
     userId: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "Users",
+      ref: "User",
       required: true,
     },
-    commentText: {
+    content: {
       type: String,
       required: true,
       trim: true,

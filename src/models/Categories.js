@@ -17,4 +17,5 @@ const categorySchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+categorySchema.index({ name: "text", simpleName: "text" });
 export default mongoose.model("Category", categorySchema);
