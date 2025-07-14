@@ -116,6 +116,42 @@ const getCommentsByPostId = async (req, res) => {
     });
   }
 };
-const deleteComment = async (req, res) => {};
+const deleteComment = async (req, res) => {
+  const { commentId } = req.params.commentId;
+  const userId = req.user.id;
+
+  if (!commentId) {
+    return res
+      .status(400)
+      .json({ success: false, message: "Comment id requried" });
+  }
+  const comment = await Comments.findById(commentId);
+  if (!comment) {
+    return res
+      .status(400)
+      .json({ success: false, message: "No comment were fuond" });
+  }
+  if (comment.userId.toString() !== userId) {
+    return res.status(400).json({
+      success: false,
+      message: "You are not authorized to delete the comment",
+    });
+  }
+  // Deleting comment
+  await comment.deleteOne();
+  // Deleting comment reference from user's posts
+  await Post.findByIdAndUpdate(comment.postId, {
+    $pull: { comments: comment._id },
+  });
+
+  try {
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error occured while deleting the post",
+      message: error.message,
+    });
+  }
+};
 
 export { addComment, updateComment, getCommentsByPostId, deleteComment };
