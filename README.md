@@ -86,6 +86,10 @@ erDiagram
     }
 ```
 
+## API Endpoints
+
+- **User**
+
 ## Server is live at
 
 - [https://tagify.onrender.com](https://tagify.onrender.com)

@@ -3,7 +3,8 @@ import Post from "../models/Posts.js";
 
 // Tested
 const createPost = async (req, res) => {
-  const { title, content, category, tags, author } = req.body;
+  const author = req.user.id;
+  const { title, content, category, tags } = req.body;
   try {
     // Validate required fields
     if (!title || !content || !category || !tags || !author) {
@@ -191,7 +192,7 @@ const viewPost = async (req, res) => {
 // Tested
 const likePost = async (req, res) => {
   const { id } = req.params;
-  const { userId } = req.body;
+  const userId = req.user.id;
   try {
     // Find the post by ID
     const post = await Post.findById(id);
@@ -227,7 +228,7 @@ const likePost = async (req, res) => {
 };
 const dislikePost = async (req, res) => {
   const { id } = req.params;
-  const { userId } = req.body;
+  const { userId } = req.user.id;
   try {
     // Find the post by ID
     const post = await Post.findById(id);
@@ -257,6 +258,41 @@ const dislikePost = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Error liking post",
+      error: error.message,
+    });
+  }
+};
+const sharePost = async (req, res) => {
+  const { id } = req.params;
+  const userId = req.user.id;
+  try {
+    // First find the post by id
+    const post = await Post.findById(id);
+    if (!post) {
+      return res.status(404).json({
+        success: false,
+        message: "Post not found",
+      });
+    }
+    // Check if the user has already shared the post
+    if (post.shares.includes(userId)) {
+      return res.status(400).json({
+        success: false,
+        message: "You have already shared this post",
+      });
+    }
+    // Add the userId to the sahre array in database
+    post.shares.push(userId);
+    await post.save();
+    res.status(200).json({
+      success: true,
+      message: "Post shared successfully",
+      post,
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: "Error sharing post",
       error: error.message,
     });
   }

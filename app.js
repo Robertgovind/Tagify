@@ -19,11 +19,11 @@ dbConnection();
 // user routes
 app.use("/api/auth", userRouter);
 // category routes
-app.use("/api/category", categoryRouter);
+app.use("/api/category", auth, categoryRouter);
 // tags routes
-app.use("/api/tags", tagsRouter);
+app.use("/api/tags", auth, tagsRouter);
 // post routes
-app.use("/api/posts", postRouter);
+app.use("/api/posts", auth, postRouter);
 // comments routes
 app.use("/api/comments", auth, commentsRouter);
 
