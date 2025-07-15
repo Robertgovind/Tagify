@@ -3,7 +3,7 @@ import multer from "multer";
 // uploading multiple files
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "./src/uploads/userProfile"); // Save files in 'uploads' folder
+    cb(null, "./src/uploads/postImages"); // Save files in 'uploads' folder
   },
   filename: (req, file, cb) => {
     const uniqueSuffix = Date.now() + "-" + Math.round(Math.random() * 1e9);
