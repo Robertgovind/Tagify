@@ -9,6 +9,13 @@ const storage = multer.diskStorage({
     cb(null, file.fieldname + "-" + uniqueSuffix + file.originalname); // Rename file
   },
 });
-const uploadSingle = multer({ storage: storage });
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith("image/")) {
+    cb(null, true); // Accept file
+  } else {
+    cb(new Error("Only images are allowed!"), false); // Reject file
+  }
+};
+const uploadSingle = multer({ storage: storage, fileFilter: fileFilter });
 
 export default uploadSingle.single("profile"); // Export the middleware for single file upload

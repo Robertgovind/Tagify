@@ -10,6 +10,8 @@ import auth from "./src/middlewares/auth.js";
 
 const app = express();
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static("src/uploads")); // Serve static files from 'uploads' directory
 
 // connection to database
 dbConnection();

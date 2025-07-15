@@ -11,6 +11,11 @@ const postSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    imageUrls: [
+      {
+        type: String,
+      },
+    ],
     category: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Category",

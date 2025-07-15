@@ -10,6 +10,13 @@ const storage = multer.diskStorage({
     cb(null, file.fieldname + "-" + uniqueSuffix + file.originalname); // Rename file
   },
 });
-const uploadMultiple = multer({ storage: storage });
+const fileFilter = (req, file, cb) => {
+  if (file.mimetype.startsWith("image/")) {
+    cb(null, true); // Accept file
+  } else {
+    cb(new Error("Only images are allowed!"), false); // Reject file
+  }
+};
+const uploadMultiple = multer({ storage: storage, fileFilter: fileFilter });
 
 export default uploadMultiple.array("postImages", 10);

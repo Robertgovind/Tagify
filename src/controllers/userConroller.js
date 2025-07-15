@@ -19,6 +19,9 @@ const registerUser = async (req, res) => {
       username,
       email,
       password: hashedPassowrd,
+      profilePicture: req.file
+        ? `/src/uploads/userProfile/${req.file.filename}`
+        : null,
       role,
     });
     await user.save();
