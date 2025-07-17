@@ -1,6 +1,6 @@
 # Tagify
 
-A robust backend API for a modern blog platform with categories, tags, and advanced filtering. Built with Node.js, Express, and MongoDB.
+A robust backend CMS(Content Management System)API for a modern blog platform with categories, tags, and advanced filtering. Built with Node.js, Express, and MongoDB.
 
 ![Tech Stack](https://img.shields.io/badge/Node.js-18-green)
 ![Tech Stack](https://img.shields.io/badge/Express-4-blue)
