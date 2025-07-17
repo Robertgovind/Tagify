@@ -455,7 +455,7 @@ const getTrendingPosts = async (req, res) => {
       .populate("category", "name")
       .populate("tags", "name")
       .populate("author", "username email")
-      .sort({ likes: -1 }) // Sort by likes for trending
+      .sort({ views: -1 }) // Sort by likes for trending
       .limit(5); // Limit to 5 trending posts
 
     res.status(200).json({

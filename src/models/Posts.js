@@ -90,6 +90,10 @@ postSchema.pre("save", function (next) {
   next();
 });
 
-postSchema.index({ title: "text", content: "text" });
+// for weighted full-text search
+postSchema.index(
+  { title: "text", content: "text" },
+  { weights: { title: 10, content: 5 } }
+);
 
 export default mongoose.model("Post", postSchema);
